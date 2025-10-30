@@ -30,6 +30,20 @@ venv\Scripts\python manage.py migrate
 venv\Scripts\python manage.py runserver
 ```
 
+### Fixtures (sample data)
+- Seed file included: `backend/fixtures/seed_catalog.json` (categories + products)
+
+Load fixtures:
+```powershell
+venv\Scripts\python manage.py loaddata backend/fixtures/seed_catalog.json
+```
+
+Create/update fixtures from current DB (example for catalog app):
+```powershell
+venv\Scripts\python manage.py dumpdata catalog --indent 2 > backend/fixtures/seed_catalog.json
+```
+Note: Avoid dumping sensitive apps like `auth` unless needed.
+
 ### Auth (JWT)
 - POST `api/auth/token/` → { username, password }
 - POST `api/auth/token/refresh/` → { refresh }

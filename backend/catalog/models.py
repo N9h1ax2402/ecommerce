@@ -6,7 +6,6 @@ class Category(models.Model):
     name = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=220, unique=True, blank=True)
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
-    tag = models.CharField(max_length=100, blank=True)
 
     class Meta:
         verbose_name_plural = 'Categories'
@@ -66,4 +65,18 @@ class Variant(models.Model):
         return display
 
 
-# Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=120, unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+# Link tags to products
+Product.add_to_class('tags', models.ManyToManyField('Tag', related_name='products', blank=True))
