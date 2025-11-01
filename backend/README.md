@@ -35,12 +35,12 @@ venv\Scripts\python manage.py runserver
 
 Load fixtures:
 ```powershell
-venv\Scripts\python manage.py loaddata backend/fixtures/seed_catalog.json
+python manage.py loaddata fixtures/seed_catalog.json
 ```
 
 Create/update fixtures from current DB (example for catalog app):
 ```powershell
-venv\Scripts\python manage.py dumpdata catalog --indent 2 > backend/fixtures/seed_catalog.json
+python manage.py dumpdata catalog --indent 2 --output fixtures/seed_catalog.json
 ```
 Note: Avoid dumping sensitive apps like `auth` unless needed.
 
