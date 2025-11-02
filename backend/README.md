@@ -94,10 +94,23 @@ Note: Avoid dumping sensitive apps directly - use the script for users.
 - POST `api/auth/token/refresh/` → { refresh }
 
 ### API Endpoints
+
+#### Products:
+- `GET /api/products/` - List products (with pagination)
+  - Filters: `?category_name=Men,Women&tag_names=casual,streetwear`
+- `GET /api/products/{id}/` - Product detail
+- `GET /api/products/{id}/recommend/` - **Rule-based recommendations**
+  - Returns products with similar tags, category, and price
+  - Query params: `?limit=5` (default: 5)
+
+#### Categories:
 - `api/categories/` (CRUD)
-- `api/products/` (CRUD)
+
+#### Cart:
 - `api/cart/me` (GET/POST to view/update cart)
 - `api/cart-items/` (CRUD items)
+
+#### Orders:
 - `api/orders/` (list/create for current user)
 
 Media served at `/media/`. Admin at `/admin/`.
