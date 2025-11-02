@@ -15,7 +15,13 @@ class CartViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def get_queryset(self):
-        return Cart.objects.filter(user=self.request.user)
+        # Sử dụng prefetch_related để load items với product và variant
+        return Cart.objects.filter(
+            user=self.request.user
+        ).prefetch_related(
+            'items__product',
+            'items__variant'
+        )
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -36,7 +42,10 @@ class CartItemViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return CartItem.objects.filter(cart__user=self.request.user)
+        # Sử dụng select_related để load product và variant, tránh N+1 queries
+        return CartItem.objects.filter(
+            cart__user=self.request.user
+        ).select_related('product', 'variant', 'cart')
 
     def perform_create(self, serializer):
         cart, _ = Cart.objects.get_or_create(user=self.request.user)

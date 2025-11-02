@@ -26,6 +26,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, related_name='products', on_delete=models.PROTECT)
     is_active = models.BooleanField(default=True)
+    sold = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -33,6 +34,11 @@ class Product(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+    def total_stock(self):
+        """Tính tổng stock từ tất cả variants của product"""
+        return sum(variant.stock for variant in self.variants.all())
+    total_stock.short_description = 'Total Stock'
 
     def __str__(self) -> str:
         return self.name

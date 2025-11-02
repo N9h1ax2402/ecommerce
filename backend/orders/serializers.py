@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.db import transaction
 from .models import Order, OrderItem
 
 
@@ -20,15 +21,50 @@ class OrderSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['user', 'status', 'total_amount']
 
+    def validate_items(self, items_data):
+        """Kiểm tra stock trước khi checkout"""
+        for item_data in items_data:
+            variant = item_data.get('variant')
+            quantity = item_data.get('quantity', 1)
+            
+            if variant:
+                if variant.stock < quantity:
+                    raise serializers.ValidationError(
+                        f"Không đủ stock cho {variant}. Stock hiện tại: {variant.stock}, yêu cầu: {quantity}"
+                    )
+        return items_data
+
+    @transaction.atomic
     def create(self, validated_data):
         items_data = validated_data.pop('items', [])
         order = Order.objects.create(**validated_data)
         total = 0
+        
         for item in items_data:
             quantity = item.get('quantity', 1)
             unit_price = item['unit_price']
             total += unit_price * quantity
-            OrderItem.objects.create(order=order, **item)
+            
+            # Tạo OrderItem
+            order_item = OrderItem.objects.create(order=order, **item)
+            
+            # Giảm stock variant và tăng sold product
+            variant = item.get('variant')
+            product = item.get('product')
+            
+            if variant:
+                # Nếu có variant, giảm stock của variant
+                variant.stock -= quantity
+                variant.save(update_fields=['stock'])
+                # Tăng sold của product từ variant
+                if variant.product:
+                    variant.product.sold += quantity
+                    variant.product.save(update_fields=['sold'])
+            elif product:
+                # Nếu chỉ có product (không có variant), tăng sold
+                product.sold += quantity
+                product.save(update_fields=['sold'])
+        
         order.total_amount = total
         order.save(update_fields=['total_amount'])
         return order

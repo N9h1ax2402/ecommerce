@@ -27,13 +27,15 @@ class CategoryAdmin(admin.ModelAdmin):
 class VariantInline(admin.TabularInline):
     model = Variant
     extra = 1
+    fields = ('sku', 'color', 'size', 'stock', 'price_override')
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     form = ProductImageForm
-    list_display = ('name', 'category', 'price', 'is_active')
+    list_display = ('name', 'category', 'price', 'total_stock', 'sold', 'is_active')
     list_filter = ('category', 'is_active')
+    readonly_fields = ('sold', 'total_stock')
     prepopulated_fields = {"slug": ("name",)}
     inlines = [VariantInline]
     fieldsets = (
@@ -42,6 +44,10 @@ class ProductAdmin(admin.ModelAdmin):
         }),
         ('Pricing', {
             'fields': ('price', 'is_active')
+        }),
+        ('Statistics', {
+            'fields': ('total_stock', 'sold',),
+            'description': 'Thống kê tổng stock và số lượng sản phẩm đã bán'
         }),
         ('Image Upload', {
             'fields': ('product_image',),
