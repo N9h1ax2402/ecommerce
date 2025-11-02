@@ -31,20 +31,65 @@ venv\Scripts\python manage.py runserver
 ```
 
 ### Fixtures (sample data)
-- Seed file included: `backend/fixtures/seed_catalog.json` (categories + products)
 
-Load fixtures:
+#### Load fixtures:
 ```powershell
+# Load catalog data (products, categories, tags)
 python manage.py loaddata fixtures/seed_catalog.json
+
+# Load users (for testing API authentication)
+python manage.py loaddata fixtures/seed_users.json
 ```
 
-Create/update fixtures from current DB (example for catalog app):
+#### Create/update fixtures:
+
+**Catalog data:**
 ```powershell
 python manage.py dumpdata catalog --indent 2 --output fixtures/seed_catalog.json
 ```
-Note: Avoid dumping sensitive apps like `auth` unless needed.
 
-### Auth (JWT)
+**Users (with properly hashed passwords):**
+```powershell
+python create_user_fixtures.py
+```
+This creates 3 test users:
+- `admin` / `admin123` (superuser)
+- `customer1` / `customer123` (regular user)
+- `customer2` / `customer123` (regular user)
+
+Note: Avoid dumping sensitive apps directly - use the script for users.
+
+### User Authentication
+
+#### Register:
+- POST `api/users/register/`
+  ```json
+  {
+    "username": "user123",
+    "email": "user@example.com",
+    "password": "password123",
+    "password_confirm": "password123",
+    "first_name": "John",
+    "last_name": "Doe"
+  }
+  ```
+  Returns: User data + JWT tokens (access & refresh)
+
+#### Login:
+- POST `api/users/login/`
+  ```json
+  {
+    "username": "user123",
+    "password": "password123"
+  }
+  ```
+  Returns: User data + JWT tokens (access & refresh)
+
+#### Profile:
+- GET `api/users/profile/` (Requires: Authorization: Bearer <token>)
+  Returns: Current user profile data
+
+#### Alternative JWT endpoints (DRF SimpleJWT):
 - POST `api/auth/token/` → { username, password }
 - POST `api/auth/token/refresh/` → { refresh }
 
