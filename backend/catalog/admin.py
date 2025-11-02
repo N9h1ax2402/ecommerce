@@ -66,11 +66,12 @@ class ProductAdmin(admin.ModelAdmin):
             products_dir = os.path.join(settings.MEDIA_ROOT, 'products')
             os.makedirs(products_dir, exist_ok=True)
             
-            # Tên file: sử dụng product name, nếu trùng thì thêm số
+            # Tên file: sử dụng product name, nếu trùng thì thêm số hoặc timestamp
             base_filename = product_name + file_ext
             filename = base_filename
             counter = 1
             while os.path.exists(os.path.join(products_dir, filename)):
+                # Nếu đã có file, thêm số vào để có thể upload nhiều ảnh cho cùng 1 product
                 filename = f"{product_name} ({counter}){file_ext}"
                 counter += 1
             
