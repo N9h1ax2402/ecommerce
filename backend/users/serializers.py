@@ -33,8 +33,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    is_admin = serializers.ReadOnlyField()
+    is_staff_user = serializers.ReadOnlyField()
+    
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'is_staff', 'date_joined']
-        read_only_fields = ['id', 'is_staff', 'date_joined']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'role', 'is_admin', 'is_staff_user']
+        read_only_fields = ['id', 'is_admin', 'is_staff_user']
 

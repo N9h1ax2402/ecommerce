@@ -5,6 +5,13 @@ from .models import User
 
 @admin.register(User)
 class UserAdmin(DjangoUserAdmin):
-    pass
+    list_display = ('username', 'email', 'first_name', 'last_name', 'role', 'is_staff', 'is_superuser', 'date_joined')
+    list_filter = ('role', 'is_staff', 'is_superuser', 'is_active')
+    fieldsets = DjangoUserAdmin.fieldsets + (
+        ('Custom Role', {'fields': ('role',)}),
+    )
+    add_fieldsets = DjangoUserAdmin.add_fieldsets + (
+        ('Custom Role', {'fields': ('role',)}),
+    )
 
 # Register your models here.
