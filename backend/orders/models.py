@@ -7,14 +7,13 @@ from catalog.models import Product, Variant
 
 class Order(models.Model):
     class Status(models.TextChoices):
-        PENDING = 'pending', 'Pending'
-        PAID = 'paid', 'Paid'
-        SHIPPED = 'shipped', 'Shipped'
-        COMPLETED = 'completed', 'Completed'
+        PACKING = 'packing', 'Packing'
+        SHIPPING = 'shipping', 'Shipping'
+        EVALUATE = 'evaluate', 'Evaluate'
         CANCELED = 'canceled', 'Canceled'
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='orders', on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.PACKING)
     total_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     shipping_full_name = models.CharField(max_length=255)
     shipping_address = models.CharField(max_length=500)
