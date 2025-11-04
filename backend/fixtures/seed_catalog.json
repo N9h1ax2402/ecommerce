@@ -373,4 +373,485 @@
     "slug": "streetwear"
   }
 }
+  ,
+  {
+    "model": "catalog.variant",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "sku": "P1-BLACK-M",
+      "color": "Black",
+      "size": "M",
+      "stock": 50,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 2,
+    "fields": {
+      "product": 1,
+      "sku": "P1-WHITE-L",
+      "color": "White",
+      "size": "L",
+      "stock": 30,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 3,
+    "fields": {
+      "product": 2,
+      "sku": "P2-FLORAL-S",
+      "color": "Floral",
+      "size": "S",
+      "stock": 25,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 4,
+    "fields": {
+      "product": 2,
+      "sku": "P2-FLORAL-M",
+      "color": "Floral",
+      "size": "M",
+      "stock": 20,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 5,
+    "fields": {
+      "product": 3,
+      "sku": "P3-BLACK-M",
+      "color": "Black",
+      "size": "M",
+      "stock": 40,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 6,
+    "fields": {
+      "product": 3,
+      "sku": "P3-GREY-L",
+      "color": "Grey",
+      "size": "L",
+      "stock": 35,
+      "price_override": "2090.00"
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 7,
+    "fields": {
+      "product": 4,
+      "sku": "P4-WHITE-OVERSIZED",
+      "color": "White",
+      "size": "Oversized",
+      "stock": 28,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 8,
+    "fields": {
+      "product": 4,
+      "sku": "P4-BLACK-OVERSIZED",
+      "color": "Black",
+      "size": "Oversized",
+      "stock": 22,
+      "price_override": "2590.00"
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 9,
+    "fields": {
+      "product": 5,
+      "sku": "P5-DENIM-30",
+      "color": "Denim",
+      "size": "30",
+      "stock": 18,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 10,
+    "fields": {
+      "product": 5,
+      "sku": "P5-DENIM-32",
+      "color": "Denim",
+      "size": "32",
+      "stock": 16,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 11,
+    "fields": {
+      "product": 6,
+      "sku": "P6-DENIM-30",
+      "color": "Denim",
+      "size": "30",
+      "stock": 20,
+      "price_override": "3590.00"
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 12,
+    "fields": {
+      "product": 6,
+      "sku": "P6-DENIM-34",
+      "color": "Denim",
+      "size": "34",
+      "stock": 14,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 13,
+    "fields": {
+      "product": 7,
+      "sku": "P7-KHAKI-31",
+      "color": "Khaki",
+      "size": "31",
+      "stock": 26,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 14,
+    "fields": {
+      "product": 7,
+      "sku": "P7-NAVY-33",
+      "color": "Navy",
+      "size": "33",
+      "stock": 19,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 15,
+    "fields": {
+      "product": 8,
+      "sku": "P8-GREY-S",
+      "color": "Grey",
+      "size": "S",
+      "stock": 24,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 16,
+    "fields": {
+      "product": 8,
+      "sku": "P8-GREY-M",
+      "color": "Grey",
+      "size": "M",
+      "stock": 20,
+      "price_override": "2090.00"
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 17,
+    "fields": {
+      "product": 9,
+      "sku": "P9-BLACK-S",
+      "color": "Black",
+      "size": "S",
+      "stock": 21,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 18,
+    "fields": {
+      "product": 9,
+      "sku": "P9-BLACK-L",
+      "color": "Black",
+      "size": "L",
+      "stock": 17,
+      "price_override": "2590.00"
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 19,
+    "fields": {
+      "product": 10,
+      "sku": "P10-NAVY-M",
+      "color": "Navy",
+      "size": "M",
+      "stock": 18,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 20,
+    "fields": {
+      "product": 10,
+      "sku": "P10-GREEN-L",
+      "color": "Green",
+      "size": "L",
+      "stock": 14,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 21,
+    "fields": {
+      "product": 11,
+      "sku": "P11-NAVY-M",
+      "color": "Navy",
+      "size": "M",
+      "stock": 32,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 22,
+    "fields": {
+      "product": 11,
+      "sku": "P11-WHITE-L",
+      "color": "White",
+      "size": "L",
+      "stock": 27,
+      "price_override": "3590.00"
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 23,
+    "fields": {
+      "product": 12,
+      "sku": "P12-BEIGE-S",
+      "color": "Beige",
+      "size": "S",
+      "stock": 16,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 24,
+    "fields": {
+      "product": 12,
+      "sku": "P12-BLUE-M",
+      "color": "Blue",
+      "size": "M",
+      "stock": 14,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 25,
+    "fields": {
+      "product": 13,
+      "sku": "P13-BLUE-M",
+      "color": "Blue",
+      "size": "M",
+      "stock": 22,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 26,
+    "fields": {
+      "product": 13,
+      "sku": "P13-WHITE-L",
+      "color": "White",
+      "size": "L",
+      "stock": 18,
+      "price_override": "2090.00"
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 27,
+    "fields": {
+      "product": 14,
+      "sku": "P14-RED-S",
+      "color": "Red",
+      "size": "S",
+      "stock": 20,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 28,
+    "fields": {
+      "product": 14,
+      "sku": "P14-BLACK-M",
+      "color": "Black",
+      "size": "M",
+      "stock": 16,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 29,
+    "fields": {
+      "product": 15,
+      "sku": "P15-BEIGE-M",
+      "color": "Beige",
+      "size": "M",
+      "stock": 15,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 30,
+    "fields": {
+      "product": 15,
+      "sku": "P15-GREY-L",
+      "color": "Grey",
+      "size": "L",
+      "stock": 12,
+      "price_override": "3090.00"
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 31,
+    "fields": {
+      "product": 16,
+      "sku": "P16-BLACK-M",
+      "color": "Black",
+      "size": "M",
+      "stock": 19,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 32,
+    "fields": {
+      "product": 16,
+      "sku": "P16-OLIVE-L",
+      "color": "Olive",
+      "size": "L",
+      "stock": 15,
+      "price_override": "3590.00"
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 33,
+    "fields": {
+      "product": 17,
+      "sku": "P17-NAVY-M",
+      "color": "Navy",
+      "size": "M",
+      "stock": 17,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 34,
+    "fields": {
+      "product": 17,
+      "sku": "P17-BLACK-L",
+      "color": "Black",
+      "size": "L",
+      "stock": 13,
+      "price_override": "4190.00"
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 35,
+    "fields": {
+      "product": 18,
+      "sku": "P18-WHITE-40",
+      "color": "White",
+      "size": "40",
+      "stock": 25,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 36,
+    "fields": {
+      "product": 18,
+      "sku": "P18-BLACK-42",
+      "color": "Black",
+      "size": "42",
+      "stock": 20,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 37,
+    "fields": {
+      "product": 19,
+      "sku": "P19-GREY-41",
+      "color": "Grey",
+      "size": "41",
+      "stock": 22,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 38,
+    "fields": {
+      "product": 19,
+      "sku": "P19-NAVY-43",
+      "color": "Navy",
+      "size": "43",
+      "stock": 18,
+      "price_override": null
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 39,
+    "fields": {
+      "product": 20,
+      "sku": "P20-BROWN-41",
+      "color": "Brown",
+      "size": "41",
+      "stock": 20,
+      "price_override": "3090.00"
+    }
+  },
+  {
+    "model": "catalog.variant",
+    "pk": 40,
+    "fields": {
+      "product": 20,
+      "sku": "P20-BLACK-42",
+      "color": "Black",
+      "size": "42",
+      "stock": 16,
+      "price_override": null
+    }
+  }
 ]
