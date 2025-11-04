@@ -5,17 +5,16 @@ from .models import Category, Product, Variant
 import os
 
 
-class ProductImageForm(forms.ModelForm):
-    """Form với field upload ảnh"""
-    product_image = forms.ImageField(
+class VariantInlineForm(forms.ModelForm):
+    variant_image = forms.ImageField(
         required=False,
-        label='Product Image',
-        help_text='Upload image sẽ được lưu vào media/products/ với tên theo product name'
+        label='Variant Image',
+        help_text='Ảnh sẽ lưu tại media/products/ với tên theo SKU của variant'
     )
-    
+
     class Meta:
-        model = Product
-        fields = '__all__'
+        model = Variant
+        fields = ['sku', 'color', 'size', 'stock', 'price_override']
 
 
 @admin.register(Category)
@@ -26,13 +25,13 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class VariantInline(admin.TabularInline):
     model = Variant
+    form = VariantInlineForm
     extra = 1
-    fields = ('sku', 'color', 'size', 'stock', 'price_override')
+    fields = ('sku', 'color', 'size', 'stock', 'price_override', 'variant_image')
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    form = ProductImageForm
     list_display = ('name', 'category', 'price', 'total_stock', 'sold', 'is_active')
     list_filter = ('category', 'is_active')
     readonly_fields = ('sold', 'total_stock')
@@ -49,46 +48,43 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('total_stock', 'sold',),
             'description': 'Thống kê tổng stock và số lượng sản phẩm đã bán'
         }),
-        ('Image Upload', {
-            'fields': ('product_image',),
-            'description': 'Upload ảnh cho product. Ảnh sẽ được lưu vào media/products/ với tên theo product name.'
-        }),
     )
-    
-    def save_model(self, request, obj, form, change):
-        """Override save để xử lý upload ảnh"""
-        # Save product trước để có ID nếu là product mới
-        super().save_model(request, obj, form, change)
-        
-        # Xử lý upload ảnh nếu có
-        if 'product_image' in form.cleaned_data and form.cleaned_data['product_image']:
-            uploaded_file = form.cleaned_data['product_image']
-            
-            # Tạo tên file theo product name
-            product_name = obj.name
-            file_ext = os.path.splitext(uploaded_file.name)[1].lower()
-            
-            # Đảm bảo thư mục products tồn tại
-            products_dir = os.path.join(settings.MEDIA_ROOT, 'products')
-            os.makedirs(products_dir, exist_ok=True)
-            
-            # Tên file: sử dụng product name, nếu trùng thì thêm số hoặc timestamp
-            base_filename = product_name + file_ext
-            filename = base_filename
-            counter = 1
-            while os.path.exists(os.path.join(products_dir, filename)):
-                # Nếu đã có file, thêm số vào để có thể upload nhiều ảnh cho cùng 1 product
-                filename = f"{product_name} ({counter}){file_ext}"
-                counter += 1
-            
-            # Lưu file
-            file_path = os.path.join(products_dir, filename)
-            with open(file_path, 'wb+') as destination:
-                for chunk in uploaded_file.chunks():
-                    destination.write(chunk)
-            
-            # Optional: Log success message
-            self.message_user(request, f'Image uploaded successfully: {filename}')
+    def save_formset(self, request, form, formset, change):
+        response = super().save_formset(request, form, formset, change)
+        # Handle variant image uploads: save as media/products/<SKU>.<ext>
+        if isinstance(formset.model, type) and issubclass(formset.model, Variant) or formset.model is Variant:
+            for inline_form in formset.forms:
+                if not inline_form.is_valid():
+                    continue
+                cleaned = getattr(inline_form, 'cleaned_data', None)
+                if not cleaned or cleaned.get('DELETE'):
+                    continue
+                sku = cleaned.get('sku') or getattr(inline_form.instance, 'sku', None)
+                uploaded = cleaned.get('variant_image')
+                if sku and uploaded:
+                    file_ext = os.path.splitext(uploaded.name)[1].lower()
+
+                    sku_base = sku.rsplit('-', 1)[0] if '-' in sku else sku
+                    products_dir = os.path.join(settings.MEDIA_ROOT, 'products')
+                    os.makedirs(products_dir, exist_ok=True)
+
+                    filename = f"{sku_base}{file_ext}"
+                    file_path = os.path.join(products_dir, filename)
+                    if os.path.exists(file_path):
+                        index = 1
+                        while True:
+                            candidate = f"{sku_base}-{index}{file_ext}"
+                            candidate_path = os.path.join(products_dir, candidate)
+                            if not os.path.exists(candidate_path):
+                                filename = candidate
+                                file_path = candidate_path
+                                break
+                            index += 1
+                    with open(file_path, 'wb+') as destination:
+                        for chunk in uploaded.chunks():
+                            destination.write(chunk)
+                    self.message_user(request, f'Uploaded image for SKU base {sku_base}: {filename}')
+        return response
 
 
 # Register your models here.

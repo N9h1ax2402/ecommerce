@@ -1,3 +1,4 @@
+from typing import Any
 from rest_framework import serializers
 from django.conf import settings
 from django.utils.text import slugify
@@ -13,9 +14,56 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class VariantSerializer(serializers.ModelSerializer):
+    image_urls = serializers.SerializerMethodField()
     class Meta:
         model = Variant
-        fields = ['id', 'sku', 'color', 'size', 'stock', 'price_override']
+        fields = ['id', 'sku', 'color', 'size', 'stock', 'price_override', 'image_urls']
+
+    def get_image_urls(self, obj):
+        request = self.context.get('request')
+        folder = os.path.join(settings.MEDIA_ROOT, 'products')
+
+        if not os.path.exists(folder):
+            return []
+
+        image_urls = []
+        found_files = set()
+
+        extensions = ['.jpg', '.jpeg', '.png', '.webp']
+        index_suffixes = ['', '-1', '-2', '-3', '-4', '-5', '-6']
+
+        if not obj.sku:
+            return []
+
+        sku_base = obj.sku.rsplit('-', 1)[0] if '-' in obj.sku else obj.sku
+        # Try both full SKU and color-level base to support existing files like P1-BLACK-M-1.jpg
+        base_names = [
+            sku_base
+
+        ]
+        seen = set()
+        ordered_bases = []
+        for b in base_names:
+            if b not in seen:
+                seen.add(b)
+                ordered_bases.append(b)
+
+        for base in ordered_bases:
+            for suffix in index_suffixes:
+                for ext in extensions:
+                    filename = f"{base}{suffix}{ext}"
+                    if filename in found_files:
+                        continue
+                    file_path = os.path.join(folder, filename)
+                    if os.path.exists(file_path):
+                        rel_path = f'products/{filename}'
+                        url = request.build_absolute_uri(settings.MEDIA_URL + rel_path) if request else settings.MEDIA_URL + rel_path
+                        image_urls.append(url)
+                        found_files.add(filename)
+
+        
+
+        return image_urls
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -30,73 +78,14 @@ class ProductSerializer(serializers.ModelSerializer):
     category_id = serializers.PrimaryKeyRelatedField(source='category', queryset=Category.objects.all(), write_only=True)
     tags = TagSerializer(many=True, read_only=True)
     tag_ids = serializers.PrimaryKeyRelatedField(source='tags', many=True, queryset=Tag.objects.all(), write_only=True, required=False)
-    image_urls = serializers.SerializerMethodField()
+    # Removed product-level image_urls; now provided on each variant
 
     class Meta:
         model = Product
         fields = [
             'id', 'name', 'slug', 'description', 'price', 'is_active',
-            'category', 'category_id', 'tags', 'tag_ids', 'image_urls', 'variants', 'created_at', 'updated_at'
+            'category', 'category_id', 'tags', 'tag_ids', 'variants', 'created_at', 'updated_at'
         ]
 
-    def get_image_urls(self, obj):
-        request = self.context.get('request')
-        
-        # Tìm tất cả ảnh theo tên với nhiều biến thể
-        folder = os.path.join(settings.MEDIA_ROOT, 'products')
-        
-        if not os.path.exists(folder):
-            return []
-        
-        image_urls = []
-        found_files = set()  # Để tránh trùng lặp
-        
-        # Danh sách các biến thể tên file để thử
-        name_variants = [
-            obj.name,  # Original: "Basic T-Shirt"
-            obj.name.replace(' ', '-'),  # "Basic-T-Shirt"
-            obj.name.replace(' ', '_'),  # "Basic_T-Shirt"
-            slugify(obj.name),  # "basic-t-shirt"
-            obj.name.lower(),  # "basic t-shirt"
-        ]
-        
-        extensions = ['.jpg', '.jpeg', '.png', '.webp', '.JPG', '.JPEG', '.PNG']
-        
-        # Thử từng biến thể tên để tìm exact match
-        for variant in name_variants:
-            for ext in extensions:
-                filename = variant + ext
-                if filename in found_files:
-                    continue
-                    
-                file_path = os.path.join(folder, filename)
-                if os.path.exists(file_path):
-                    rel_path = f'products/{filename}'
-                    if request:
-                        url = request.build_absolute_uri(settings.MEDIA_URL + rel_path)
-                    else:
-                        url = settings.MEDIA_URL + rel_path
-                    image_urls.append(url)
-                    found_files.add(filename)
-        
-        # Tìm các file có tên chứa product name (partial match)
-        product_words = set(obj.name.lower().split())
-        for filename in os.listdir(folder):
-            if filename in found_files:
-                continue
-                
-            if any(filename.lower().endswith(ext.lower()) for ext in extensions):
-                file_words = set(filename.lower().replace('-', ' ').replace('_', ' ').replace('.', ' ').split())
-                # Check if filename contains product name words
-                if product_words.intersection(file_words):
-                    rel_path = f'products/{filename}'
-                    if request:
-                        url = request.build_absolute_uri(settings.MEDIA_URL + rel_path)
-                    else:
-                        url = settings.MEDIA_URL + rel_path
-                    image_urls.append(url)
-                    found_files.add(filename)
-        
-        return image_urls  # Trả về array, có thể rỗng []
 
 
