@@ -1,10 +1,10 @@
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from django.db.models import Q, Count, F
+from django.db.models import Q, Count, F, Sum
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFilter
 from .models import Category, Product, Tag, Variant
-from .serializers import CategorySerializer, ProductSerializer, VariantSerializer
+from .serializers import CategorySerializer, ProductSerializer, VariantSerializer, ProductSalesSerializer
 from users.permissions import IsAdminOrStaff
 
 
@@ -134,15 +134,14 @@ class ProductViewSet(viewsets.ModelViewSet):
         
         return list(queryset)
 
-    @action(detail=False, methods=['get'], url_path='sold', permission_classes=[IsAdminOrStaff])
+    @action(detail=False, methods=['get'], url_path='sales-stats', permission_classes=[IsAdminOrStaff])
     def list_by_sold(self, request):
         """
         Admin/Staff: list products ordered by sold desc
-        GET /api/products/sales-stats
+        GET /api/products/sales-stats/
         """
-
         products = Product.objects.all().order_by('-sold', '-updated_at')
-        serializer = self.get_serializer(products, many=True)
+        serializer = ProductSalesSerializer(products, many=True)
         return Response({
             'count': len(serializer.data),
             'results': serializer.data
@@ -160,3 +159,4 @@ class VariantViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         # All actions require staff/admin; no public access to variant CRUD
         return [IsAdminOrStaff()]
+        

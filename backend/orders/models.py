@@ -1,6 +1,6 @@
-from django.db import models
+from django.db import models, transaction
 from django.conf import settings
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from catalog.models import Product, Variant
 
@@ -26,7 +26,6 @@ class Order(models.Model):
         return f"Order #{self.id} - {self.user}"
 
     def restore_stock_and_sold(self):
-        """Hoàn trả stock và giảm sold khi order bị cancel"""
         for item in self.items.all():
             variant = item.variant
             product = item.product
@@ -72,6 +71,60 @@ class OrderItem(models.Model):
 
     def __str__(self) -> str:
         return f"{self.product_name} x {self.quantity}"
+
+
+@receiver(pre_save, sender=OrderItem)
+def order_item_capture_old_quantity(sender, instance: 'OrderItem', **kwargs):
+    """Capture old quantity before save to compute delta in post_save."""
+    if instance.pk:
+        try:
+            old = OrderItem.objects.get(pk=instance.pk)
+            instance._old_quantity = old.quantity
+        except OrderItem.DoesNotExist:
+            instance._old_quantity = 0
+    else:
+        instance._old_quantity = 0
+
+
+@receiver(post_save, sender=OrderItem)
+def order_item_adjust_on_save(sender, instance: 'OrderItem', created: bool, **kwargs):
+    old_qty = getattr(instance, '_old_quantity', 0) or 0
+    delta = instance.quantity - old_qty
+    if delta == 0:
+        return
+    with transaction.atomic():
+        if instance.variant:
+            variant = instance.variant
+            product = variant.product
+            variant.stock = max(0, variant.stock - delta)
+            variant.save(update_fields=['stock'])
+            if product:
+                product.sold = max(0, product.sold + delta)
+                product.save(update_fields=['sold'])
+        elif instance.product:
+            product = instance.product
+            product.sold = max(0, product.sold + delta)
+            product.save(update_fields=['sold'])
+
+
+@receiver(post_delete, sender=OrderItem)
+def order_item_restore_on_delete(sender, instance: 'OrderItem', **kwargs):
+    """Restore stock and sold when an order item is removed."""
+    qty = instance.quantity
+    if qty <= 0:
+        return
+    if instance.variant:
+        variant = instance.variant
+        product = variant.product
+        variant.stock = variant.stock + qty
+        variant.save(update_fields=['stock'])
+        if product:
+            product.sold = max(0, product.sold - qty)
+            product.save(update_fields=['sold'])
+    elif instance.product:
+        product = instance.product
+        product.sold = max(0, product.sold - qty)
+        product.save(update_fields=['sold'])
 
 
 # Create your models here.

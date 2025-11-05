@@ -46,24 +46,7 @@ class OrderSerializer(serializers.ModelSerializer):
             total += unit_price * quantity
             
             # Tạo OrderItem
-            order_item = OrderItem.objects.create(order=order, **item)
-            
-            # Giảm stock variant và tăng sold product
-            variant = item.get('variant')
-            product = item.get('product')
-            
-            if variant:
-                # Nếu có variant, giảm stock của variant
-                variant.stock -= quantity
-                variant.save(update_fields=['stock'])
-                # Tăng sold của product từ variant
-                if variant.product:
-                    variant.product.sold += quantity
-                    variant.product.save(update_fields=['sold'])
-            elif product:
-                # Nếu chỉ có product (không có variant), tăng sold
-                product.sold += quantity
-                product.save(update_fields=['sold'])
+            OrderItem.objects.create(order=order, **item)
         
         order.total_amount = total
         order.save(update_fields=['total_amount'])

@@ -90,3 +90,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 
+
+class ProductSalesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'slug', 'price', 'sold', 'updated_at']
