@@ -15,9 +15,10 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class VariantSerializer(serializers.ModelSerializer):
     image_urls = serializers.SerializerMethodField()
+    product_id = serializers.PrimaryKeyRelatedField(source='product', queryset=Product.objects.all(), write_only=True, required=True)
     class Meta:
         model = Variant
-        fields = ['id', 'sku', 'color', 'size', 'stock', 'price_override', 'image_urls']
+        fields = ['id', 'sku', 'color', 'size', 'stock', 'price_override', 'image_urls', 'product_id']
 
     def get_image_urls(self, obj):
         request = self.context.get('request')

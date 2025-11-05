@@ -3,8 +3,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q, Count, F
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFilter
-from .models import Category, Product, Tag
-from .serializers import CategorySerializer, ProductSerializer
+from .models import Category, Product, Tag, Variant
+from .serializers import CategorySerializer, ProductSerializer, VariantSerializer
 from users.permissions import IsAdminOrStaff
 
 
@@ -150,3 +150,13 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 # Create your views here.
+
+
+class VariantViewSet(viewsets.ModelViewSet):
+    queryset = Variant.objects.select_related('product').all()
+    serializer_class = VariantSerializer
+    permission_classes = [IsAdminOrStaff]
+
+    def get_permissions(self):
+        # All actions require staff/admin; no public access to variant CRUD
+        return [IsAdminOrStaff()]
