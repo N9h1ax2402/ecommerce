@@ -5,6 +5,7 @@ from django.db.models import Q, Count, F
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFilter
 from .models import Category, Product, Tag
 from .serializers import CategorySerializer, ProductSerializer
+from users.permissions import IsAdminOrStaff
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -44,6 +45,12 @@ class ProductViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
+    
+    def get_permissions(self):
+        # Read-only for everyone; write actions require admin or staff
+        if self.request.method in permissions.SAFE_METHODS:
+            return [permissions.AllowAny()]
+        return [IsAdminOrStaff()]
     
     @action(detail=True, methods=['get'], url_path='recommend')
     def recommend(self, request, pk=None):
@@ -115,6 +122,20 @@ class ProductViewSet(viewsets.ModelViewSet):
         ).order_by('-total_score', '-created_at')[:limit]
         
         return list(queryset)
+
+    @action(detail=False, methods=['get'], url_path='sold', permission_classes=[IsAdminOrStaff])
+    def list_by_sold(self, request):
+        """
+        Admin/Staff: list products ordered by sold desc
+        GET /api/products/sale-stats
+        """
+
+        products = Product.objects.all().order_by('-sold', '-updated_at')
+        serializer = self.get_serializer(products, many=True)
+        return Response({
+            'count': len(serializer.data),
+            'results': serializer.data
+        })
 
 
 # Create your views here.

@@ -20,7 +20,7 @@ from rest_framework.routers import DefaultRouter
 from catalog.views import CategoryViewSet, ProductViewSet
 from cart.views import CartViewSet, CartItemViewSet
 from orders.views import OrderViewSet
-from users.views import register, login, profile
+from users.views import register, login, profile, admin_list_users, admin_update_user
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -39,6 +39,9 @@ urlpatterns = [
     path('api/users/register/', register, name='register'),
     path('api/users/login/', login, name='login'),
     path('api/users/profile/', profile, name='profile'),
+    # Admin management
+    path('api/admin/users/', admin_list_users, name='admin_list_users'),
+    path('api/admin/users/<int:pk>/', admin_update_user, name='admin_update_user'),
     # JWT token endpoints (alternative)
     path('api/auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
