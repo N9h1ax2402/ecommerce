@@ -46,6 +46,17 @@ class ProductViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
     
+    def get_queryset(self):
+        """
+        - Public users see only active products
+        - Staff/Admin can see all products (including inactive) for management
+        """
+        base_qs = Product.objects.all().order_by('-created_at')
+        request = getattr(self, 'request', None)
+        if request and request.user and request.user.is_authenticated and getattr(request.user, 'is_staff_user', False):
+            return base_qs
+        return base_qs.filter(is_active=True)
+
     def get_permissions(self):
         # Read-only for everyone; write actions require admin or staff
         if self.request.method in permissions.SAFE_METHODS:
@@ -127,7 +138,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     def list_by_sold(self, request):
         """
         Admin/Staff: list products ordered by sold desc
-        GET /api/products/sale-stats
+        GET /api/products/sales-stats
         """
 
         products = Product.objects.all().order_by('-sold', '-updated_at')

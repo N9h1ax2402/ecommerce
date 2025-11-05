@@ -1,20 +1,16 @@
-from rest_framework import status, permissions, viewsets
+from rest_framework import status, permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db import models
 from .serializers import RegisterSerializer, UserSerializer
-<<<<<<< HEAD
 from .permissions import IsAdmin, IsAdminOrStaff
-=======
-from rest_framework.permissions import BasePermission, IsAuthenticated
->>>>>>> 1438460a8559713023f1ef16c9a300149f6b3ab9
 
 User = get_user_model()
 
 
-@api_view(["POST"])
+@api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register(request):
     """
@@ -32,26 +28,23 @@ def register(request):
     serializer = RegisterSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
-
+        
         # Generate JWT tokens
         refresh = RefreshToken.for_user(user)
-
-        return Response(
-            {
-                "user": UserSerializer(user).data,
-                "tokens": {
-                    "refresh": str(refresh),
-                    "access": str(refresh.access_token),
-                },
-                "message": "User registered successfully",
+        
+        return Response({
+            'user': UserSerializer(user).data,
+            'tokens': {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
             },
-            status=status.HTTP_201_CREATED,
-        )
-
+            'message': 'User registered successfully'
+        }, status=status.HTTP_201_CREATED)
+    
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(["POST"])
+@api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def login(request):
     """
@@ -62,37 +55,43 @@ def login(request):
         "password": "password123"
     }
     """
-    username = request.data.get("username")
-    password = request.data.get("password")
-
+    username = request.data.get('username')
+    password = request.data.get('password')
+    
     if not username or not password:
-        return Response({"error": "Username and password are required"}, status=status.HTTP_400_BAD_REQUEST)
-
+        return Response(
+            {'error': 'Username and password are required'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
     user = authenticate(username=username, password=password)
-
+    
     if user is None:
-        return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
-
+        return Response(
+            {'error': 'Invalid credentials'},
+            status=status.HTTP_401_UNAUTHORIZED
+        )
+    
     if not user.is_active:
-        return Response({"error": "User account is disabled"}, status=status.HTTP_401_UNAUTHORIZED)
-
+        return Response(
+            {'error': 'User account is disabled'},
+            status=status.HTTP_401_UNAUTHORIZED
+        )
+    
     # Generate JWT tokens
     refresh = RefreshToken.for_user(user)
-
-    return Response(
-        {
-            "user": UserSerializer(user).data,
-            "tokens": {
-                "refresh": str(refresh),
-                "access": str(refresh.access_token),
-            },
-            "message": "Login successful",
+    
+    return Response({
+        'user': UserSerializer(user).data,
+        'tokens': {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
         },
-        status=status.HTTP_200_OK,
-    )
+        'message': 'Login successful'
+    }, status=status.HTTP_200_OK)
 
 
-@api_view(["GET"])
+@api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def profile(request):
     """
@@ -103,7 +102,6 @@ def profile(request):
     return Response(UserSerializer(request.user).data, status=status.HTTP_200_OK)
 
 
-<<<<<<< HEAD
 @api_view(['GET'])
 @permission_classes([IsAdmin])
 def admin_list_users(request):
@@ -141,40 +139,3 @@ def admin_update_user(request, pk):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['POST'])
-@permission_classes([IsAdminOrStaff])
-def staff_modify_product(request):
-    """
-    Staff: Modify product
-    POST /api/staff/products/
-    Body: {
-        "product_id": 1,
-        "action": "approve"
-    }
-    """
-    
-=======
-class IsAdminUserRole(BasePermission):
-    """
-    Custom permission: only role ADMIN or is_superuser
-    """
-
-    def has_permission(self, request, view):
-        return bool(
-            request.user
-            and request.user.is_authenticated
-            and (getattr(request.user, "role", None) == "ADMIN" or request.user.is_superuser)
-        )
-
-
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    Admin-only endpoint to view list of users
-    GET /api/users/
-    """
-
-    queryset = User.objects.all().order_by("-id")
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated, IsAdminUserRole]
->>>>>>> 1438460a8559713023f1ef16c9a300149f6b3ab9
