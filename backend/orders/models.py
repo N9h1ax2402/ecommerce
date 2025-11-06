@@ -7,12 +7,12 @@ from catalog.models import Product, Variant
 
 class Order(models.Model):
     class Status(models.TextChoices):
-        PACKING = 'packing', 'Packing'
-        SHIPPING = 'shipping', 'Shipping'
-        EVALUATE = 'evaluate', 'Evaluate'
-        CANCELED = 'canceled', 'Canceled'
+        PACKING = "packing", "Packing"
+        SHIPPING = "shipping", "Shipping"
+        EVALUATE = "evaluate", "Evaluate"
+        CANCELED = "canceled", "Canceled"
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='orders', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="orders", on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PACKING)
     total_amount = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     shipping_full_name = models.CharField(max_length=255)
@@ -30,19 +30,19 @@ class Order(models.Model):
             variant = item.variant
             product = item.product
             quantity = item.quantity
-            
+
             if variant:
                 # Hoàn trả stock variant
                 variant.stock += quantity
-                variant.save(update_fields=['stock'])
+                variant.save(update_fields=["stock"])
                 # Giảm sold của product
                 if variant.product:
                     variant.product.sold = max(0, variant.product.sold - quantity)
-                    variant.product.save(update_fields=['sold'])
+                    variant.product.save(update_fields=["sold"])
             elif product:
                 # Giảm sold của product
                 product.sold = max(0, product.sold - quantity)
-                product.save(update_fields=['sold'])
+                product.save(update_fields=["sold"])
 
 
 @receiver(pre_save, sender=Order)
@@ -59,7 +59,7 @@ def handle_order_status_change(sender, instance, **kwargs):
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.PROTECT)
     variant = models.ForeignKey(Variant, null=True, blank=True, on_delete=models.PROTECT)
     product_name = models.CharField(max_length=255)
@@ -74,7 +74,7 @@ class OrderItem(models.Model):
 
 
 @receiver(pre_save, sender=OrderItem)
-def order_item_capture_old_quantity(sender, instance: 'OrderItem', **kwargs):
+def order_item_capture_old_quantity(sender, instance: "OrderItem", **kwargs):
     """Capture old quantity before save to compute delta in post_save."""
     if instance.pk:
         try:
@@ -87,8 +87,8 @@ def order_item_capture_old_quantity(sender, instance: 'OrderItem', **kwargs):
 
 
 @receiver(post_save, sender=OrderItem)
-def order_item_adjust_on_save(sender, instance: 'OrderItem', created: bool, **kwargs):
-    old_qty = getattr(instance, '_old_quantity', 0) or 0
+def order_item_adjust_on_save(sender, instance: "OrderItem", created: bool, **kwargs):
+    old_qty = getattr(instance, "_old_quantity", 0) or 0
     delta = instance.quantity - old_qty
     if delta == 0:
         return
@@ -97,18 +97,18 @@ def order_item_adjust_on_save(sender, instance: 'OrderItem', created: bool, **kw
             variant = instance.variant
             product = variant.product
             variant.stock = max(0, variant.stock - delta)
-            variant.save(update_fields=['stock'])
+            variant.save(update_fields=["stock"])
             if product:
                 product.sold = max(0, product.sold + delta)
-                product.save(update_fields=['sold'])
+                product.save(update_fields=["sold"])
         elif instance.product:
             product = instance.product
             product.sold = max(0, product.sold + delta)
-            product.save(update_fields=['sold'])
+            product.save(update_fields=["sold"])
 
 
 @receiver(post_delete, sender=OrderItem)
-def order_item_restore_on_delete(sender, instance: 'OrderItem', **kwargs):
+def order_item_restore_on_delete(sender, instance: "OrderItem", **kwargs):
     """Restore stock and sold when an order item is removed."""
     qty = instance.quantity
     if qty <= 0:
@@ -117,32 +117,29 @@ def order_item_restore_on_delete(sender, instance: 'OrderItem', **kwargs):
         variant = instance.variant
         product = variant.product
         variant.stock = variant.stock + qty
-        variant.save(update_fields=['stock'])
+        variant.save(update_fields=["stock"])
         if product:
             product.sold = max(0, product.sold - qty)
-            product.save(update_fields=['sold'])
+            product.save(update_fields=["sold"])
     elif instance.product:
         product = instance.product
         product.sold = max(0, product.sold - qty)
-        product.save(update_fields=['sold'])
+        product.save(update_fields=["sold"])
 
 
 class CanceledOrderFeedback(models.Model):
     class Reason(models.TextChoices):
-        CHANGE_ADDRESS = 'Change shipping address'
-        CHANGE_SIZE = 'Change size'
-        ADD_DISCOUNT = 'Add discount code'
-        CHANGE_PRODUCT = 'Change product'
-        NO_NEED = 'No longer needed'
-        OTHER = 'Other reason'
-    
-    order = models.OneToOneField('Order', related_name='canceled_feedback', on_delete=models.CASCADE)
-    reason = models.CharField(max_length=50, choices=Reason.choices)
-    other_description = models.CharField(max_length=255,blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+        CHANGE_ADDRESS = "Change shipping address"
+        CHANGE_SIZE = "Change size"
+        ADD_DISCOUNT = "Add discount code"
+        CHANGE_PRODUCT = "Change product"
+        NO_NEED = "No longer needed"
+        OTHER = "Other reason"
 
+    order = models.OneToOneField("Order", related_name="canceled_feedback", on_delete=models.CASCADE)
+    reason = models.CharField(max_length=50, choices=Reason.choices)
+    other_description = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return f"Feedback for Order #{self.order.id}"
-
-    
