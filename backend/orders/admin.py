@@ -6,8 +6,6 @@ from django.db import transaction
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
-    readonly_fields = ['product_name', 'unit_price', 'quantity']
-    can_delete = False
 
 class CanceledOrderFeedbackInline(admin.StackedInline):
     model = CanceledOrderFeedback

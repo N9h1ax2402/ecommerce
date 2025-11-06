@@ -3,6 +3,8 @@ from django.conf import settings
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from catalog.models import Product, Variant
+from django.core.exceptions import ValidationError
+from decimal import Decimal
 
 
 class Order(models.Model):
@@ -143,3 +145,29 @@ class CanceledOrderFeedback(models.Model):
 
     def __str__(self) -> str:
         return f"Feedback for Order #{self.order.id}"
+
+
+
+def validate_half_star(value: Decimal):
+    """Ensure rating is between 0.5 and 5.0 in 0.5 increments."""
+    if value is None:
+        return
+    # Range check
+    if value < Decimal("0.5") or value > Decimal("5.0"):
+        raise ValidationError("Rating must be between 0.5 and 5.0.")
+    # Half-step check: value * 2 must be an integer
+    doubled = value * 2
+    if doubled != doubled.to_integral_value():
+        raise ValidationError("Rating must be in 0.5 increments.")
+
+
+class OrderRating(models.Model):
+    order = models.OneToOneField("Order", related_name="rating", on_delete=models.CASCADE)
+    # 0.5 increments, 0.5 .. 5.0
+    score = models.DecimalField(max_digits=2, decimal_places=1, validators=[validate_half_star])
+    comment = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"Rating {self.score} for Order #{self.order_id}"
+

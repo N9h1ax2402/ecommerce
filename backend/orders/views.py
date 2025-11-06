@@ -1,8 +1,8 @@
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Order, CanceledOrderFeedback
-from .serializers import OrderSerializer, CanceledOrderFeedbackSerializer
+from .models import Order, CanceledOrderFeedback, OrderRating
+from .serializers import OrderSerializer, CanceledOrderFeedbackSerializer, OrderRatingSerializer
 from users.permissions import IsAdminOrStaff
 
 
@@ -114,6 +114,30 @@ class OrderViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save(order=order)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['post'], url_path='rate')
+    def rate_order(self, request, pk=None):
+        """
+        Body: { "score": 4.5, "comment": "optional" }
+        """
+        order = self.get_object()
+
+        if order.user != request.user:
+            return Response({'detail': 'You can only rate your own orders.'}, status=status.HTTP_403_FORBIDDEN)
+
+        if order.status != Order.Status.EVALUATE:
+            return Response({'detail': 'You can only rate orders in Evaluate status.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if hasattr(order, 'rating'):
+            return Response({'detail': 'This order has already been rated.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = OrderRatingSerializer(data=request.data)
+        if serializer.is_valid():
+            rating = serializer.save(order=order)
+            # Return the created rating and order id
+            data = OrderRatingSerializer(rating).data
+            return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

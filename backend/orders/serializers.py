@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.db import transaction
-from .models import Order, OrderItem, CanceledOrderFeedback
+from .models import Order, OrderItem, CanceledOrderFeedback, OrderRating
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -12,6 +12,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
     feedback = serializers.SerializerMethodField()
+    rating = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
@@ -26,6 +27,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "shipping_postal_code",
             "items",
             "feedback",
+            "rating",
             "created_at",
             "updated_at",
         ]
@@ -39,8 +41,14 @@ class OrderSerializer(serializers.ModelSerializer):
         except CanceledOrderFeedback.DoesNotExist:
             return None
 
+    def get_rating(self, obj):
+        try:
+            rating = obj.rating
+            return OrderRatingSerializer(rating).data
+        except OrderRating.DoesNotExist:
+            return None
+
     def validate_items(self, items_data):
-        """Kiểm tra stock trước khi checkout"""
         for item_data in items_data:
             variant = item_data.get("variant")
             quantity = item_data.get("quantity", 1)
@@ -48,7 +56,7 @@ class OrderSerializer(serializers.ModelSerializer):
             if variant:
                 if variant.stock < quantity:
                     raise serializers.ValidationError(
-                        f"Không đủ stock cho {variant}. Stock hiện tại: {variant.stock}, yêu cầu: {quantity}"
+                        f"Not enough stock for {variant}. Currently stock: {variant.stock}, requested: {quantity}"
                     )
         return items_data
 
@@ -75,4 +83,11 @@ class CanceledOrderFeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = CanceledOrderFeedback
         fields = ["id", "order", "reason", "other_description", "created_at"]
+        read_only_fields = ["id", "order", "created_at"]
+
+
+class OrderRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderRating
+        fields = ["id", "order", "score", "comment", "created_at"]
         read_only_fields = ["id", "order", "created_at"]
