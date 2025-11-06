@@ -127,4 +127,22 @@ def order_item_restore_on_delete(sender, instance: 'OrderItem', **kwargs):
         product.save(update_fields=['sold'])
 
 
-# Create your models here.
+class CanceledOrderFeedback(models.Model):
+    class Reason(models.TextChoices):
+        CHANGE_ADDRESS = 'Change shipping address'
+        CHANGE_SIZE = 'Change size'
+        ADD_DISCOUNT = 'Add discount code'
+        CHANGE_PRODUCT = 'Change product'
+        NO_NEED = 'No longer needed'
+        OTHER = 'Other reason'
+    
+    order = models.OneToOneField('Order', related_name='canceled_feedback', on_delete=models.CASCADE)
+    reason = models.CharField(max_length=50, choices=Reason.choices)
+    other_description = models.CharField(max_length=255,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self) -> str:
+        return f"Feedback for Order #{self.order.id}"
+
+    
