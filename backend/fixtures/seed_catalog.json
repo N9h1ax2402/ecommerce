@@ -1,379 +1,378 @@
 [
-{
-  "model": "catalog.category",
-  "pk": 1,
-  "fields": {
-    "name": "Men",
-    "slug": "men",
-    "parent": null
-  }
-},
-{
-  "model": "catalog.category",
-  "pk": 2,
-  "fields": {
-    "name": "Women",
-    "slug": "women",
-    "parent": null
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 1,
-  "fields": {
-    "name": "Basic T-Shirt",
-    "slug": "basic-t-shirt",
-    "description": "100% cotton tee",
-    "price": "199000.00",
-    "category": 1,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 2,
-  "fields": {
-    "name": "Summer Dress",
-    "slug": "summer-dress",
-    "description": "Lightweight floral dress",
-    "price": "399000.00",
-    "category": 2,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 3,
-  "fields": {
-    "name": "Graphic Tee 1003",
-    "slug": "graphic-tee-1003",
-    "description": "Comfortable everyday wear.",
-    "price": "1990.00",
-    "category": 1,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 4,
-  "fields": {
-    "name": "Oversized Tee 1004",
-    "slug": "oversized-tee-1004",
-    "description": "Soft cotton blend.",
-    "price": "2490.00",
-    "category": 2,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 5,
-  "fields": {
-    "name": "Slim Jeans 1005",
-    "slug": "slim-jeans-1005",
-    "description": "Breathable and lightweight.",
-    "price": "2990.00",
-    "category": 1,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 6,
-  "fields": {
-    "name": "Relaxed Jeans 1006",
-    "slug": "relaxed-jeans-1006",
-    "description": "Durable fabric with a clean look.",
-    "price": "3490.00",
-    "category": 2,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 7,
-  "fields": {
-    "name": "Chino Pants 1007",
-    "slug": "chino-pants-1007",
-    "description": "Perfect for casual outings.",
-    "price": "3990.00",
-    "category": 1,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 8,
-  "fields": {
-    "name": "Hoodie 1008",
-    "slug": "hoodie-1008",
-    "description": "Comfortable everyday wear.",
-    "price": "1990.00",
-    "category": 2,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 9,
-  "fields": {
-    "name": "Zip Hoodie 1009",
-    "slug": "zip-hoodie-1009",
-    "description": "Soft cotton blend.",
-    "price": "2490.00",
-    "category": 1,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 10,
-  "fields": {
-    "name": "Crewneck Sweatshirt 1010",
-    "slug": "crewneck-sweatshirt-1010",
-    "description": "Breathable and lightweight.",
-    "price": "2990.00",
-    "category": 2,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 11,
-  "fields": {
-    "name": "Polo Shirt 1011",
-    "slug": "polo-shirt-1011",
-    "description": "Durable fabric with a clean look.",
-    "price": "3490.00",
-    "category": 1,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 12,
-  "fields": {
-    "name": "Linen Shirt 1012",
-    "slug": "linen-shirt-1012",
-    "description": "Perfect for casual outings.",
-    "price": "3990.00",
-    "category": 2,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 13,
-  "fields": {
-    "name": "Oxford Shirt 1013",
-    "slug": "oxford-shirt-1013",
-    "description": "Comfortable everyday wear.",
-    "price": "1990.00",
-    "category": 1,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 14,
-  "fields": {
-    "name": "Maxi Dress 1014",
-    "slug": "maxi-dress-1014",
-    "description": "Soft cotton blend.",
-    "price": "2490.00",
-    "category": 2,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 15,
-  "fields": {
-    "name": "Cardigan 1015",
-    "slug": "cardigan-1015",
-    "description": "Breathable and lightweight.",
-    "price": "2990.00",
-    "category": 1,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 16,
-  "fields": {
-    "name": "Jacket 1016",
-    "slug": "jacket-1016",
-    "description": "Durable fabric with a clean look.",
-    "price": "3490.00",
-    "category": 2,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 17,
-  "fields": {
-    "name": "Puffer Jacket 1017",
-    "slug": "puffer-jacket-1017",
-    "description": "Perfect for casual outings.",
-    "price": "3990.00",
-    "category": 1,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 18,
-  "fields": {
-    "name": "Sneakers 1018",
-    "slug": "sneakers-1018",
-    "description": "Comfortable everyday wear.",
-    "price": "1990.00",
-    "category": 2,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 19,
-  "fields": {
-    "name": "Slip-Ons 1019",
-    "slug": "slip-ons-1019",
-    "description": "Soft cotton blend.",
-    "price": "2490.00",
-    "category": 1,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      1
-    ]
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 20,
-  "fields": {
-    "name": "Loafers 1020",
-    "slug": "loafers-1020",
-    "description": "Breathable and lightweight.",
-    "price": "2990.00",
-    "category": 2,
-    "is_active": true,
-    "created_at": "2024-01-01T00:00:00Z",
-    "updated_at": "2024-01-01T00:00:00Z",
-    "tags": [
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 1,
-  "fields": {
-    "name": "casual",
-    "slug": "casual"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 2,
-  "fields": {
-    "name": "streetwear",
-    "slug": "streetwear"
-  }
-}
-  ,
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Men",
+      "slug": "men",
+      "parent": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Women",
+      "slug": "women",
+      "parent": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Basic T-Shirt",
+      "slug": "basic-t-shirt",
+      "description": "100% cotton tee",
+      "price": "46.00",
+      "category": 1,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Summer Dress",
+      "slug": "summer-dress",
+      "description": "Lightweight floral dress",
+      "price": "47.00",
+      "category": 2,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Graphic Tee 1003",
+      "slug": "graphic-tee-1003",
+      "description": "Comfortable everyday wear.",
+      "price": "48.00",
+      "category": 1,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "name": "Oversized Tee 1004",
+      "slug": "oversized-tee-1004",
+      "description": "Soft cotton blend.",
+      "price": "49.00",
+      "category": 2,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "name": "Slim Jeans 1005",
+      "slug": "slim-jeans-1005",
+      "description": "Breathable and lightweight.",
+      "price": "50.00",
+      "category": 1,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+      "name": "Relaxed Jeans 1006",
+      "slug": "relaxed-jeans-1006",
+      "description": "Durable fabric with a clean look.",
+      "price": "45.00",
+      "category": 2,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+      "name": "Chino Pants 1007",
+      "slug": "chino-pants-1007",
+      "description": "Perfect for casual outings.",
+      "price": "46.00",
+      "category": 1,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+      "name": "Hoodie 1008",
+      "slug": "hoodie-1008",
+      "description": "Comfortable everyday wear.",
+      "price": "47.00",
+      "category": 2,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+      "name": "Zip Hoodie 1009",
+      "slug": "zip-hoodie-1009",
+      "description": "Soft cotton blend.",
+      "price": "48.00",
+      "category": 1,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 10,
+    "fields": {
+      "name": "Crewneck Sweatshirt 1010",
+      "slug": "crewneck-sweatshirt-1010",
+      "description": "Breathable and lightweight.",
+      "price": "49.00",
+      "category": 2,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 11,
+    "fields": {
+      "name": "Polo Shirt 1011",
+      "slug": "polo-shirt-1011",
+      "description": "Durable fabric with a clean look.",
+      "price": "50.00",
+      "category": 1,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 12,
+    "fields": {
+      "name": "Linen Shirt 1012",
+      "slug": "linen-shirt-1012",
+      "description": "Perfect for casual outings.",
+      "price": "45.00",
+      "category": 2,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 13,
+    "fields": {
+      "name": "Oxford Shirt 1013",
+      "slug": "oxford-shirt-1013",
+      "description": "Comfortable everyday wear.",
+      "price": "46.00",
+      "category": 1,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 14,
+    "fields": {
+      "name": "Maxi Dress 1014",
+      "slug": "maxi-dress-1014",
+      "description": "Soft cotton blend.",
+      "price": "47.00",
+      "category": 2,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 15,
+    "fields": {
+      "name": "Cardigan 1015",
+      "slug": "cardigan-1015",
+      "description": "Breathable and lightweight.",
+      "price": "48.00",
+      "category": 1,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 16,
+    "fields": {
+      "name": "Jacket 1016",
+      "slug": "jacket-1016",
+      "description": "Durable fabric with a clean look.",
+      "price": "49.00",
+      "category": 2,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 17,
+    "fields": {
+      "name": "Puffer Jacket 1017",
+      "slug": "puffer-jacket-1017",
+      "description": "Perfect for casual outings.",
+      "price": "50.00",
+      "category": 1,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 18,
+    "fields": {
+      "name": "Sneakers 1018",
+      "slug": "sneakers-1018",
+      "description": "Comfortable everyday wear.",
+      "price": "45.00",
+      "category": 2,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 19,
+    "fields": {
+      "name": "Slip-Ons 1019",
+      "slug": "slip-ons-1019",
+      "description": "Soft cotton blend.",
+      "price": "46.00",
+      "category": 1,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 20,
+    "fields": {
+      "name": "Loafers 1020",
+      "slug": "loafers-1020",
+      "description": "Breathable and lightweight.",
+      "price": "47.00",
+      "category": 2,
+      "is_active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "tags": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "catalog.tag",
+    "pk": 1,
+    "fields": {
+      "name": "casual",
+      "slug": "casual"
+    }
+  },
+  {
+    "model": "catalog.tag",
+    "pk": 2,
+    "fields": {
+      "name": "streetwear",
+      "slug": "streetwear"
+    }
+  },
   {
     "model": "catalog.variant",
     "pk": 1,
@@ -383,7 +382,7 @@
       "color": "Black",
       "size": "M",
       "stock": 50,
-      "price_override": null
+      "price_override": "46.50"
     }
   },
   {
@@ -395,7 +394,7 @@
       "color": "White",
       "size": "L",
       "stock": 30,
-      "price_override": null
+      "price_override": "46.50"
     }
   },
   {
@@ -407,7 +406,7 @@
       "color": "Floral",
       "size": "S",
       "stock": 25,
-      "price_override": null
+      "price_override": "47.50"
     }
   },
   {
@@ -419,7 +418,7 @@
       "color": "Floral",
       "size": "M",
       "stock": 20,
-      "price_override": null
+      "price_override": "47.50"
     }
   },
   {
@@ -431,7 +430,7 @@
       "color": "Black",
       "size": "M",
       "stock": 40,
-      "price_override": null
+      "price_override": "48.50"
     }
   },
   {
@@ -443,7 +442,7 @@
       "color": "Grey",
       "size": "L",
       "stock": 35,
-      "price_override": "2090.00"
+      "price_override": "48.50"
     }
   },
   {
@@ -455,7 +454,7 @@
       "color": "White",
       "size": "Oversized",
       "stock": 28,
-      "price_override": null
+      "price_override": "49.50"
     }
   },
   {
@@ -467,7 +466,7 @@
       "color": "Black",
       "size": "Oversized",
       "stock": 22,
-      "price_override": "2590.00"
+      "price_override": "49.50"
     }
   },
   {
@@ -479,7 +478,7 @@
       "color": "Denim",
       "size": "30",
       "stock": 18,
-      "price_override": null
+      "price_override": "50.50"
     }
   },
   {
@@ -491,7 +490,7 @@
       "color": "Denim",
       "size": "32",
       "stock": 16,
-      "price_override": null
+      "price_override": "50.50"
     }
   },
   {
@@ -503,7 +502,7 @@
       "color": "Denim",
       "size": "30",
       "stock": 20,
-      "price_override": "3590.00"
+      "price_override": "45.50"
     }
   },
   {
@@ -515,7 +514,7 @@
       "color": "Denim",
       "size": "34",
       "stock": 14,
-      "price_override": null
+      "price_override": "45.50"
     }
   },
   {
@@ -527,7 +526,7 @@
       "color": "Khaki",
       "size": "31",
       "stock": 26,
-      "price_override": null
+      "price_override": "46.50"
     }
   },
   {
@@ -539,7 +538,7 @@
       "color": "Navy",
       "size": "33",
       "stock": 19,
-      "price_override": null
+      "price_override": "46.50"
     }
   },
   {
@@ -551,7 +550,7 @@
       "color": "Grey",
       "size": "S",
       "stock": 24,
-      "price_override": null
+      "price_override": "47.50"
     }
   },
   {
@@ -563,7 +562,7 @@
       "color": "Grey",
       "size": "M",
       "stock": 20,
-      "price_override": "2090.00"
+      "price_override": "47.50"
     }
   },
   {
@@ -575,7 +574,7 @@
       "color": "Black",
       "size": "S",
       "stock": 21,
-      "price_override": null
+      "price_override": "48.50"
     }
   },
   {
@@ -587,7 +586,7 @@
       "color": "Black",
       "size": "L",
       "stock": 17,
-      "price_override": "2590.00"
+      "price_override": "48.50"
     }
   },
   {
@@ -599,7 +598,7 @@
       "color": "Navy",
       "size": "M",
       "stock": 18,
-      "price_override": null
+      "price_override": "49.50"
     }
   },
   {
@@ -611,7 +610,7 @@
       "color": "Green",
       "size": "L",
       "stock": 14,
-      "price_override": null
+      "price_override": "49.50"
     }
   },
   {
@@ -623,7 +622,7 @@
       "color": "Navy",
       "size": "M",
       "stock": 32,
-      "price_override": null
+      "price_override": "50.50"
     }
   },
   {
@@ -635,7 +634,7 @@
       "color": "White",
       "size": "L",
       "stock": 27,
-      "price_override": "3590.00"
+      "price_override": "50.50"
     }
   },
   {
@@ -647,7 +646,7 @@
       "color": "Beige",
       "size": "S",
       "stock": 16,
-      "price_override": null
+      "price_override": "45.50"
     }
   },
   {
@@ -659,7 +658,7 @@
       "color": "Blue",
       "size": "M",
       "stock": 14,
-      "price_override": null
+      "price_override": "45.50"
     }
   },
   {
@@ -671,7 +670,7 @@
       "color": "Blue",
       "size": "M",
       "stock": 22,
-      "price_override": null
+      "price_override": "46.50"
     }
   },
   {
@@ -683,7 +682,7 @@
       "color": "White",
       "size": "L",
       "stock": 18,
-      "price_override": "2090.00"
+      "price_override": "46.50"
     }
   },
   {
@@ -695,7 +694,7 @@
       "color": "Red",
       "size": "S",
       "stock": 20,
-      "price_override": null
+      "price_override": "47.50"
     }
   },
   {
@@ -707,7 +706,7 @@
       "color": "Black",
       "size": "M",
       "stock": 16,
-      "price_override": null
+      "price_override": "47.50"
     }
   },
   {
@@ -719,7 +718,7 @@
       "color": "Beige",
       "size": "M",
       "stock": 15,
-      "price_override": null
+      "price_override": "48.50"
     }
   },
   {
@@ -731,7 +730,7 @@
       "color": "Grey",
       "size": "L",
       "stock": 12,
-      "price_override": "3090.00"
+      "price_override": "48.50"
     }
   },
   {
@@ -743,7 +742,7 @@
       "color": "Black",
       "size": "M",
       "stock": 19,
-      "price_override": null
+      "price_override": "49.50"
     }
   },
   {
@@ -755,7 +754,7 @@
       "color": "Olive",
       "size": "L",
       "stock": 15,
-      "price_override": "3590.00"
+      "price_override": "49.50"
     }
   },
   {
@@ -767,7 +766,7 @@
       "color": "Navy",
       "size": "M",
       "stock": 17,
-      "price_override": null
+      "price_override": "50.50"
     }
   },
   {
@@ -779,7 +778,7 @@
       "color": "Black",
       "size": "L",
       "stock": 13,
-      "price_override": "4190.00"
+      "price_override": "50.50"
     }
   },
   {
@@ -791,7 +790,7 @@
       "color": "White",
       "size": "40",
       "stock": 25,
-      "price_override": null
+      "price_override": "45.50"
     }
   },
   {
@@ -803,7 +802,7 @@
       "color": "Black",
       "size": "42",
       "stock": 20,
-      "price_override": null
+      "price_override": "45.50"
     }
   },
   {
@@ -815,7 +814,7 @@
       "color": "Grey",
       "size": "41",
       "stock": 22,
-      "price_override": null
+      "price_override": "46.50"
     }
   },
   {
@@ -827,7 +826,7 @@
       "color": "Navy",
       "size": "43",
       "stock": 18,
-      "price_override": null
+      "price_override": "46.50"
     }
   },
   {
@@ -839,7 +838,7 @@
       "color": "Brown",
       "size": "41",
       "stock": 20,
-      "price_override": "3090.00"
+      "price_override": "47.50"
     }
   },
   {
@@ -851,7 +850,7 @@
       "color": "Black",
       "size": "42",
       "stock": 16,
-      "price_override": null
+      "price_override": "47.50"
     }
   }
 ]
